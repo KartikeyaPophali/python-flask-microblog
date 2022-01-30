@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Sign In</h1>
+    <form action='' method='post' novalidate>   <!-- action - URL for HTTP request; if empty, use URL in address bar -->
+        {{ form.hidden_tag() }}     <!-- hidden field that includes a token to protect against CSRF attacks -->
+        <p>
+            {{ form.username.label }}<br>       <!-- wtfForm fields know how to render themselves, so no HTML fields -->
+            {{ form.username(size=32) }}
+            {% for error in form.username.errors %}     <!-- render error messages added by validators -->
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

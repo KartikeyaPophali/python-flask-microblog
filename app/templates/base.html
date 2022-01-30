@@ -1,16 +1,35 @@
+<!--
+Template inheritance - all html files will inherit this base template
+base.html ensures that the look is uniform for all pages (Title and the Home button)
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {% if title %}
+    {% if title %}      <!-- conditional statement -->
     <title>{{ title }} - Microblog</title>
     {% else %}
     <title>Welcome to Microblog!</title>
     {% endif %}
 </head>
 <body>
-    <div>Microblog: <a href="/index">Home</a></div>
+    <div>
+        Microblog:
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+    </div>
     <hr>
-    {% block content %}{% endblock %}
+    <!-- To render messages registered with flash() inside all subclassed templates -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}   <!-- once message is processed, gets removed from the messages list -->
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}   <!-- block control statement - derived templates can insert here -->
 </body>
 </html>
